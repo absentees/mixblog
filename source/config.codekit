@@ -1301,6 +1301,50 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/javascripts\/soundmanager2\/soundmanager2-jsmin.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/javascripts\/soundmanager2\/soundmanager2-jsmin.js",
+		"outputAbbreviatedPath": "\/javascripts\/soundmanager2\/min\/soundmanager2-jsmin-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/javascripts\/soundmanager2\/soundmanager2-nodebug-jsmin.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/javascripts\/soundmanager2\/soundmanager2-nodebug-jsmin.js",
+		"outputAbbreviatedPath": "\/javascripts\/soundmanager2\/min\/soundmanager2-nodebug-jsmin-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/javascripts\/soundmanager2\/soundmanager2-nodebug.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/javascripts\/soundmanager2\/soundmanager2-nodebug.js",
+		"outputAbbreviatedPath": "\/javascripts\/soundmanager2\/min\/soundmanager2-nodebug-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/javascripts\/soundmanager2\/soundmanager2.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/javascripts\/soundmanager2\/soundmanager2.js",
+		"outputAbbreviatedPath": "\/javascripts\/soundmanager2\/min\/soundmanager2-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/layout.erb": {
 		"fileType": 8192,
 		"ignore": 0,

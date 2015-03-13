@@ -3,10 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
-    <title>Blog Title<%= ' - ' + current_article.title unless current_article.nil? %></title>
+    <title>four seasons.<%= ' - ' + current_article.title unless current_article.nil? %></title>
     <%= feed_tag :atom, "#{blog.options.prefix.to_s}/feed.xml", title: "Atom Feed" %>
 
-    <link rel="stylesheet" href="stylesheets/css/main.css">  
+    <link rel="stylesheet" href="stylesheets/css/main.css">
+
+    <script src="//use.typekit.net/iyk2ous.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+
 
   </head>
   <body>
@@ -15,27 +19,143 @@
       <%= yield %>
     </div>
 
-    <aside>
-      <h2>Recent Articles</h2>
-      <ol>
-        <% blog.articles[0...10].each do |article| %>
-          <li><%= link_to article.title, article %> <span><%= article.date.strftime('%b %e') %></span></li>
-        <% end %>
-      </ol>
+  <div class="player">
+      <div class="title">Bridge Burning</div>
+      <a class="prev">Previous</a>
+      <a class="play">Play</a>
+      <a class="pause">Pause</a>
+      <a class="next">Next</a>
+      <ol class="tracks">Tracks</ol>
+    </div>
 
-      <h2>Tags</h2>
-      <ol>
-        <% blog.tags.each do |tag, articles| %>
-          <li><%= link_to "#{tag} (#{articles.size})", tag_path(tag) %></li>
-        <% end %>
-      </ol>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="javascripts/soundmanager2/soundmanager2-jsmin.js"></script>
+  <script>
+    soundManager.url = '/swfs/';
+    soundManager.flashVersion = 9;
+    soundManager.useFlashBlock = false;
+    soundManager.useHighPerformance = true;
+    soundManager.wmode = 'transparent';
+    soundManager.useFastPolling = true;
 
-      <h2>By Year</h2>
-      <ol>
-        <% blog.articles.group_by {|a| a.date.year }.each do |year, articles| %>
-          <li><%= link_to "#{year} (#{articles.size})", blog_year_path(year) %></li>
-        <% end %>
-      </ol>
-    </aside>
+    $(function(){
+
+    	soundManager.onready(function() {
+    	var consumer_key = "64490173cf79fa8173cf8bf23ff6c8d5", url = "http://soundcloud.com/foofighters/sets/wasting-light";
+
+    		$.getJSON('http://api.soundcloud.com/resolve?url=' + url + '&format=json&consumer_key=' + consumer_key + '&callback=?', function(playlist){
+
+        	$('.title').text(playlist.tracks[0].title);
+
+    			$.each(playlist.tracks, function(index, track) {
+    				$('<li>' + track.title + '</li>').data('track', track).appendTo('.tracks');
+    				url = track.stream_url;
+    				(url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
+    				url = url + 'consumer_key=' + consumer_key;
+
+    				soundManager.createSound({
+
+    					id: 'track_' + track.id,
+    					url: url,
+
+    					onplay: function() {
+    						$('.player').addClass('playing');
+    						$('.title').text(track.title);
+    					},
+    					onresume: function() {
+    						$('.player').addClass('playing');
+    					},
+
+
+    					onpause: function() {
+    						$('.player').removeClass('playing');
+    					},
+
+    					onfinish: function() {
+    						nextTrack();
+    					}
+
+    				});
+
+    			});
+
+    		});
+
+    		$('.tracks li').live('click', function(){
+
+
+    			var $track = $(this),
+    					data = $track.data('track'),
+    					playing = $track.is('.active');
+
+    			if (playing) {
+
+    				soundManager.pause('track_' + data.id);
+
+    			} else {
+
+    				if ($track.siblings('li').hasClass('active')) { soundManager.stopAll(); }
+
+    				soundManager.play('track_' + data.id);
+
+    			}
+
+    			$track.toggleClass('active').siblings('li').removeClass('active');
+
+    		});
+
+
+    		$('.play, .pause').live('click', function(){
+
+    			if ( $('li').hasClass('active') == true ) {
+    				soundManager.togglePause( 'track_' + $('li.active').data('track').id );
+
+    			} else {
+
+    				$('li:first').click();
+
+    			}
+
+    		});
+
+    		$('.next').live('click', function(){
+    			nextTrack();
+    		});
+
+
+    		$('.prev').live('click', function(){
+    			prevTrack();
+    		});
+
+
+    		var nextTrack = function(){
+
+    			soundManager.stopAll();
+
+    			if ( $('li.active').next().click().length == 0 ) {
+    				$('.tracks li:first').click();
+    			}
+
+    		}
+
+    		var prevTrack = function(){
+
+    			soundManager.stopAll();
+
+    	if ( $('li.active').prev().click().length == 0 ) {
+    				$('.tracks li:last').click();
+    			}
+
+    		}
+
+    	});
+
+    });
+
+
+
+
+  </script>
+
   </body>
 </html>

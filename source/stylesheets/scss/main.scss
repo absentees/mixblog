@@ -1,3 +1,18 @@
 @import "bourbon/bourbon";
 @import "neat/neat";
 @import "base/base";
+
+.tracks {
+  display: none; }
+
+.play {
+  display: block; }
+
+.pause {
+  display: none; }
+
+.playing .play {
+  display: none; }
+
+.playing .pause {
+  display: block; }
