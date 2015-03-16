@@ -304,5 +304,14 @@ picture {
     margin-left: 25.5894128995%; }
     #main article:last-child {
       margin-right: 0; }
+    @media screen and (max-width: 500px) {
+      #main article {
+        float: left;
+        display: block;
+        margin-right: 7.4229703521%;
+        width: 100%;
+        margin-left: 0%; }
+        #main article:last-child {
+          margin-right: 0; } }
     #main article img {
       text-align: center; }
