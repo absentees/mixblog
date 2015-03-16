@@ -6,7 +6,7 @@
     <title>four seasons.<%= ' - ' + current_article.title unless current_article.nil? %></title>
     <%= feed_tag :atom, "#{blog.options.prefix.to_s}/feed.xml", title: "Atom Feed" %>
 
-    <link rel="stylesheet" href="stylesheets/css/main.css">
+    <link rel="stylesheet" href="../stylesheets/css/main.css">
 
     <script src="//use.typekit.net/iyk2ous.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
@@ -19,14 +19,6 @@
       <%= yield %>
     </div>
 
-  <div class="player">
-      <div class="title">Bridge Burning</div>
-      <a class="prev">Previous</a>
-      <a class="play">Play</a>
-      <a class="pause">Pause</a>
-      <a class="next">Next</a>
-      <ol class="tracks">Tracks</ol>
-    </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="javascripts/soundmanager2/soundmanager2-jsmin.js"></script>
@@ -41,47 +33,74 @@
     $(function(){
 
     	soundManager.onready(function() {
-    	var consumer_key = "64490173cf79fa8173cf8bf23ff6c8d5", url = "http://soundcloud.com/foofighters/sets/wasting-light";
+    	var consumer_key = "64490173cf79fa8173cf8bf23ff6c8d5", url = "http://soundcloud.com/absenteesmusic/sets/summer-2014";
 
     		$.getJSON('http://api.soundcloud.com/resolve?url=' + url + '&format=json&consumer_key=' + consumer_key + '&callback=?', function(playlist){
 
         	$('.title').text(playlist.tracks[0].title);
 
     			$.each(playlist.tracks, function(index, track) {
-    				$('<li>' + track.title + '</li>').data('track', track).appendTo('.tracks');
-    				url = track.stream_url;
-    				(url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
-    				url = url + 'consumer_key=' + consumer_key;
 
-    				soundManager.createSound({
+            if(track.stream_url){
+              $('<li>' + track.title + '</li>').data('track', track).appendTo('.tracks');
+              url = track.stream_url;
 
-    					id: 'track_' + track.id,
-    					url: url,
+              (url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
+              url = url + 'consumer_key=' + consumer_key;
 
-    					onplay: function() {
-    						$('.player').addClass('playing');
-    						$('.title').text(track.title);
-    					},
-    					onresume: function() {
-    						$('.player').addClass('playing');
-    					},
+              soundManager.createSound({
+
+                id: 'track_' + track.id,
+                url: url,
+
+                onplay: function() {
+                  $('.player').addClass('playing');
+                  $('.title').text(track.title);
+                },
+                onresume: function() {
+                  $('.player').addClass('playing');
+                },
 
 
-    					onpause: function() {
-    						$('.player').removeClass('playing');
-    					},
+                onpause: function() {
+                  $('.player').removeClass('playing');
+                },
 
-    					onfinish: function() {
-    						nextTrack();
-    					}
+                onfinish: function() {
+                  nextTrack();
+                }
+              });
 
-    				});
+            }
 
     			});
 
+          $('.tracks li').on('click', function(){
+
+
+            var $track = $(this),
+                data = $track.data('track'),
+                playing = $track.is('.active');
+
+            if (playing) {
+
+              soundManager.pause('track_' + data.id);
+
+            } else {
+
+              if ($track.siblings('li').hasClass('active')) { soundManager.stopAll(); }
+
+              soundManager.play('track_' + data.id);
+
+            }
+
+            $track.toggleClass('active').siblings('li').removeClass('active');
+
+          });
     		});
 
-    		$('.tracks li').live('click', function(){
+    /*
+    		$('.tracks li').on('click', function(){
 
 
     			var $track = $(this),
@@ -103,9 +122,9 @@
     			$track.toggleClass('active').siblings('li').removeClass('active');
 
     		});
+*/
 
-
-    		$('.play, .pause').live('click', function(){
+    		$('.play, .pause').on('click', function(){
 
     			if ( $('li').hasClass('active') == true ) {
     				soundManager.togglePause( 'track_' + $('li.active').data('track').id );
@@ -118,12 +137,12 @@
 
     		});
 
-    		$('.next').live('click', function(){
+    		$('.next').on('click', function(){
     			nextTrack();
     		});
 
 
-    		$('.prev').live('click', function(){
+    		$('.prev').on('click', function(){
     			prevTrack();
     		});
 

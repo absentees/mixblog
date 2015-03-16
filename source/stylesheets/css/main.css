@@ -1,3 +1,13 @@
+@charset "UTF-8";
+/* Neat 1.7.0.pre
+ * http://neat.bourbon.io
+ * Copyright 2012–2014 thoughtbot, inc.
+ * MIT License */
+/**
+ * Disable all deprecation warnings. Defaults to `false`. Set with a `!global` flag.
+ *
+ * @type Bool
+ */
 html {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -8,6 +18,73 @@ html {
   -moz-box-sizing: inherit;
   box-sizing: inherit; }
 
+/**
+ * Makes an element a outer container by centring it in the viewport, clearing its floats, and setting its `max-width`.
+ *
+ * Although optional, using `outer-container` is recommended. The mixin can be called on more than one element per page, as long as they are not nested.
+ *
+ * @param {Number} $local-max-width ($max-width) - Max width to be applied to the element. Can be a percentage or a measure.
+ *
+ * @example scss
+ *  .element {
+ *    @include outer-container(100%);
+ *  }
+ *
+ * @example css
+ *  .element {
+ *    *zoom: 1;
+ *    max-width: 100%;
+ *    margin-left: auto;
+ *    margin-right: auto;
+ *  }
+ *
+ *  .element:before, .element:after {
+ *    content: " ";
+ *    display: table;
+ *  }
+ *
+ *  .element:after {
+ *    clear: both;
+ *  }
+ */
+/**
+ * Changes the display property used by other mixins called in the code block argument.
+ *
+ * @param {String} $display (block) - Display value to be used within the block. Can be `table` or `block`.
+ *
+ * @example scss
+ *   @include display(table) {
+ *    .display-table {
+ *      @include span-columns(6);
+ *     }
+ *   }
+ *
+ * @example css
+ *   // CSS
+ *   .display-table {
+ *      display: table-cell;
+ *      ...
+ *   }
+ */
+/**
+ * Changes the direction property used by other mixins called in the code block argument.
+ *
+ * @param {String} $direction (left-to-right) - Layout direction to be used within the block. Can be `left-to-right` or `right-to-left`.
+ *
+ * @example scss
+ *   @include direction(right-to-left) {
+ *    .right-to-left-block {
+ *      @include span-columns(6);
+ *     }
+ *   }
+ *
+ * @example css
+ *   // CSS
+ *   .right-to-left-block {
+ *     float: right;
+ *      ...
+ *   }
+ */
 input[type="button"], input[type="reset"], input[type="submit"],
 button {
   -webkit-appearance: none;
@@ -210,3 +287,22 @@ picture {
 
 .playing .pause {
   display: block; }
+
+#main {
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto; }
+  #main:after {
+    content: "";
+    display: table;
+    clear: both; }
+  #main article {
+    float: left;
+    display: block;
+    margin-right: 2.3576515979%;
+    width: 48.821174201%;
+    margin-left: 25.5894128995%; }
+    #main article:last-child {
+      margin-right: 0; }
+    #main article img {
+      text-align: center; }
