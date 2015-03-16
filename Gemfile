@@ -8,3 +8,6 @@ gem 'middleman-livereload'
 
 # For feed.xml.builder
 gem "builder", "~> 3.0"
+
+require 'em/pure_ruby'
+gem 'tzinfo-data'

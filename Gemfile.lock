@@ -32,13 +32,15 @@ GEM
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
     erubis (2.7.0)
-    eventmachine (1.0.3)
+    eventmachine (1.0.7)
     execjs (2.4.0)
-    ffi (1.9.6)
+    ffi (1.9.8)
+    ffi (1.9.8-x86-mingw32)
     haml (4.0.6)
       tilt
     hike (1.2.3)
     hitimes (1.2.2)
+    hitimes (1.2.2-x86-mingw32)
     hooks (0.4.0)
       uber (~> 0.0.4)
     http_parser.rb (0.6.0)
@@ -76,11 +78,10 @@ GEM
       rack-test (~> 0.6.2)
       thor (>= 0.15.2, < 2.0)
       tilt (~> 1.4.1, < 2.0)
-    middleman-livereload (3.1.1)
-      em-websocket (>= 0.2.0)
-      middleman-core (>= 3.0.2)
-      multi_json (~> 1.0)
-      rack-livereload
+    middleman-livereload (3.4.2)
+      em-websocket (~> 0.5.1)
+      middleman-core (>= 3.3)
+      rack-livereload (~> 0.3.15)
     middleman-sprockets (3.4.2)
       middleman-core (>= 3.3)
       sprockets (~> 2.12.1)
@@ -114,12 +115,14 @@ GEM
       sprockets (~> 2.0)
       tilt (~> 1.1)
     thor (0.19.1)
-    thread_safe (0.3.4)
+    thread_safe (0.3.5)
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2015.1)
+      tzinfo (>= 1.0.0)
     uber (0.0.13)
     uglifier (2.7.1)
       execjs (>= 0.3.0)
@@ -127,9 +130,11 @@ GEM
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   builder (~> 3.0)
   middleman (~> 3.3.10)
   middleman-blog (~> 3.5.3)
   middleman-livereload
+  tzinfo-data
