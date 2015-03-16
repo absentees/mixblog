@@ -11,3 +11,5 @@ gem "builder", "~> 3.0"
 
 require 'em/pure_ruby'
 gem 'tzinfo-data'
+
+gem 'middleman-deploy', '~> 1.0'
