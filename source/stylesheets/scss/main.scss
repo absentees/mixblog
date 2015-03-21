@@ -3,7 +3,8 @@
 @import "base/base";
 
 .tracks {
-  display: none; }
+  display: none;
+  }
 
 .play {
   display: block; }
@@ -23,6 +24,8 @@
 
 
   article{
+    @include padding(10vh null 10px null);
+
     @include span-columns(6);
     @include shift(3);
 
@@ -30,7 +33,7 @@
       @include span-columns(4);
       @include shift(0);
     }
-    
+
     img{
       text-align:center;
     }

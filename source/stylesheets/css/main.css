@@ -297,6 +297,8 @@ picture {
     display: table;
     clear: both; }
   #main article {
+    padding-top: 10vh;
+    padding-bottom: 10px;
     float: left;
     display: block;
     margin-right: 2.3576515979%;

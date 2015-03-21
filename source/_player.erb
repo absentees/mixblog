@@ -1,0 +1,127 @@
+
+      <script>
+        soundManager.url = '/swfs/';
+        soundManager.flashVersion = 9;
+        soundManager.useFlashBlock = false;
+        soundManager.useHighPerformance = true;
+        soundManager.wmode = 'transparent';
+        soundManager.useFastPolling = true;
+
+
+        $(function(){
+
+          soundManager.onready(function() {
+          var consumer_key = "64490173cf79fa8173cf8bf23ff6c8d5", url = "<%= article.tags[0] %>";
+
+            $.getJSON('http://api.soundcloud.com/resolve?url=' + url + '&format=json&consumer_key=' + consumer_key, function(playlist){
+
+              $('.<%=article.date.strftime('%m-%Y')%>-player .title').text(playlist.tracks[0].title);
+
+              $.each(playlist.tracks, function(index, track) {
+
+                if(track.stream_url){
+                  $('<li>' + track.title + '</li>').data('track', track).appendTo('.<%=article.date.strftime('%m-%Y')%>-player .tracks');
+                  url = track.stream_url;
+
+                  (url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
+                  url = url + 'consumer_key=' + consumer_key;
+
+                  soundManager.createSound({
+
+                    id: 'track_' + track.id,
+                    url: url,
+
+                    onplay: function() {
+                      $('.<%=article.date.strftime('%m-%Y')%>-player').addClass('playing');
+                      $('.<%=article.date.strftime('%m-%Y')%>-player .title').text(track.title);
+                    },
+                    onresume: function() {
+                      $('.<%=article.date.strftime('%m-%Y')%>-player').addClass('playing');
+                    },
+
+                    onpause: function() {
+                      $('.<%=article.date.strftime('%m-%Y')%>-player').removeClass('playing');
+                    },
+
+                    onfinish: function() {
+                      nextTrack();
+                    }
+                  });
+
+                }
+
+              });
+
+              $('.<%=article.date.strftime('%m-%Y')%>-player .tracks li').on('click', function(){
+
+
+                var $track = $(this),
+                    data = $track.data('track'),
+                    playing = $track.is('.active');
+
+                if (playing) {
+
+                  soundManager.pause('track_' + data.id);
+
+                } else {
+
+                  if ($track.siblings('li').hasClass('active')) { soundManager.stopAll(); }
+
+                  soundManager.play('track_' + data.id);
+
+                }
+
+                $track.toggleClass('active').siblings('li').removeClass('active');
+
+              });
+            });
+
+            $('.<%=article.date.strftime('%m-%Y')%>-player .play, .<%=article.date.strftime('%m-%Y')%>-player .pause').on('click', function(){
+              console.log("PLAY");
+
+              if ( $('.<%=article.date.strftime('%m-%Y')%>-player .tracks li').hasClass('active') == true ) {
+                soundManager.togglePause( 'track_' + $('.<%=article.date.strftime('%m-%Y')%>-player .tracks li.active').data('track').id );
+
+              } else {
+
+                $('.<%=article.date.strftime('%m-%Y')%>-player .tracks li:first').click();
+
+              }
+
+            });
+
+            $('.<%=article.date.strftime('%m-%Y')%>-player .next').on('click', function(){
+              nextTrack();
+            });
+
+
+            $('.<%=article.date.strftime('%m-%Y')%>-player .prev').on('click', function(){
+              prevTrack();
+            });
+
+
+            var nextTrack = function(){
+
+              soundManager.stopAll();
+
+              if ( $('.<%=article.date.strftime('%m-%Y')%>-player .tracks li.active').next().click().length == 0 ) {
+                $('.<%=article.date.strftime('%m-%Y')%>-player .tracks li:first').click();
+              }
+
+            }
+
+            var prevTrack = function(){
+
+              soundManager.stopAll();
+
+          if ( $('.<%=article.date.strftime('%m-%Y')%>-player .tracks li.active').prev().click().length == 0 ) {
+                $('.<%=article.date.strftime('%m-%Y')%>-player .tracks li:last').click();
+              }
+
+            }
+
+          });
+
+        });
+
+      </script>
