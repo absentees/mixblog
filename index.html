@@ -1,0 +1,1531 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>mixblog.</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+
+    <link rel="stylesheet" href="./stylesheets/css/main.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="javascripts/soundmanager2/soundmanager2-jsmin.js"></script>
+    <script src="//use.typekit.net/iyk2ous.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+
+
+  </head>
+  <body>
+
+    <div id="main" role="main">
+      
+  <article id="07-2015-article">
+  <h2><a href="/2015/07/01/winter.html">Autumn</a><span>  2015</span></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <h3></h3>
+
+  <p><img alt="pic" src="https://i1.sndcdn.com/artworks-000127206344-e88f6h-t500x500.jpg" /></p>
+
+
+  <div class="07-2015-player">
+      <div class="title">Track Title</div>
+      <a class="prev">Previous</a>
+      <a class="play">Play</a>
+      <a class="pause">Pause</a>
+      <a class="next">Next</a>
+      <ol class="tracks"></ol>
+    </div>
+
+  
+      <script>
+        soundManager.url = '/swfs/';
+        soundManager.flashVersion = 9;
+        soundManager.useFlashBlock = false;
+        soundManager.useHighPerformance = true;
+        soundManager.wmode = 'transparent';
+        soundManager.useFastPolling = true;
+
+
+        $(function(){
+
+          soundManager.onready(function() {
+          var consumer_key = "64490173cf79fa8173cf8bf23ff6c8d5", url = "https://soundcloud.com/absenteesmusic/sets/winter-2015";
+
+            $.getJSON('http://api.soundcloud.com/resolve?url=' + url + '&format=json&consumer_key=' + consumer_key, function(playlist){
+
+              $('.07-2015-player .title').text(playlist.tracks[0].title);
+
+              $.each(playlist.tracks, function(index, track) {
+
+                if(track.stream_url){
+                  $('<li>' + track.title + '</li>').data('track', track).appendTo('.07-2015-player .tracks');
+                  url = track.stream_url;
+
+                  (url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
+                  url = url + 'consumer_key=' + consumer_key;
+
+                  soundManager.createSound({
+
+                    id: 'track_' + track.id,
+                    url: url,
+
+                    onplay: function() {
+                      $('.07-2015-player').addClass('playing');
+                      $('.07-2015-player .title').text(track.title);
+                    },
+                    onresume: function() {
+                      $('.07-2015-player').addClass('playing');
+                    },
+
+                    onpause: function() {
+                      $('.07-2015-player').removeClass('playing');
+                    },
+
+                    onfinish: function() {
+                      nextTrack();
+                    }
+                  });
+
+                }
+
+              });
+
+              $('.07-2015-player .tracks li').on('click', function(){
+
+
+                var $track = $(this),
+                    data = $track.data('track'),
+                    playing = $track.is('.active');
+
+                if (playing) {
+
+                  soundManager.pause('track_' + data.id);
+
+                } else {
+
+                  if ($track.siblings('li').hasClass('active')) { soundManager.stopAll(); }
+
+                  soundManager.play('track_' + data.id);
+
+                }
+
+                $track.toggleClass('active').siblings('li').removeClass('active');
+
+              });
+            });
+
+            $('.07-2015-player .play, .07-2015-player .pause').on('click', function(){
+              console.log("PLAY");
+
+              if ( $('.07-2015-player .tracks li').hasClass('active') == true ) {
+                soundManager.togglePause( 'track_' + $('.07-2015-player .tracks li.active').data('track').id );
+
+              } else {
+
+                $('.07-2015-player .tracks li:first').click();
+
+              }
+
+            });
+
+            $('.07-2015-player .next').on('click', function(){
+              nextTrack();
+            });
+
+
+            $('.07-2015-player .prev').on('click', function(){
+              prevTrack();
+            });
+
+
+            var nextTrack = function(){
+
+              soundManager.stopAll();
+
+              if ( $('.07-2015-player .tracks li.active').next().click().length == 0 ) {
+                $('.07-2015-player .tracks li:first').click();
+              }
+
+            }
+
+            var prevTrack = function(){
+
+              soundManager.stopAll();
+
+          if ( $('.07-2015-player .tracks li.active').prev().click().length == 0 ) {
+                $('.07-2015-player .tracks li:last').click();
+              }
+
+            }
+
+          });
+
+        });
+
+      </script>
+
+
+
+  </article>
+
+  <article id="03-2015-article">
+  <h2><a href="/2015/03/01/autumn.html">Autumn</a><span>  2015</span></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <h3></h3>
+
+  <p><img alt="pic" src="https://i1.sndcdn.com/artworks-000127206477-curwbe-t500x500.jpg" /></p>
+
+
+  <div class="03-2015-player">
+      <div class="title">Track Title</div>
+      <a class="prev">Previous</a>
+      <a class="play">Play</a>
+      <a class="pause">Pause</a>
+      <a class="next">Next</a>
+      <ol class="tracks"></ol>
+    </div>
+
+  
+      <script>
+        soundManager.url = '/swfs/';
+        soundManager.flashVersion = 9;
+        soundManager.useFlashBlock = false;
+        soundManager.useHighPerformance = true;
+        soundManager.wmode = 'transparent';
+        soundManager.useFastPolling = true;
+
+
+        $(function(){
+
+          soundManager.onready(function() {
+          var consumer_key = "64490173cf79fa8173cf8bf23ff6c8d5", url = "https://soundcloud.com/absenteesmusic/sets/autumn-2015";
+
+            $.getJSON('http://api.soundcloud.com/resolve?url=' + url + '&format=json&consumer_key=' + consumer_key, function(playlist){
+
+              $('.03-2015-player .title').text(playlist.tracks[0].title);
+
+              $.each(playlist.tracks, function(index, track) {
+
+                if(track.stream_url){
+                  $('<li>' + track.title + '</li>').data('track', track).appendTo('.03-2015-player .tracks');
+                  url = track.stream_url;
+
+                  (url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
+                  url = url + 'consumer_key=' + consumer_key;
+
+                  soundManager.createSound({
+
+                    id: 'track_' + track.id,
+                    url: url,
+
+                    onplay: function() {
+                      $('.03-2015-player').addClass('playing');
+                      $('.03-2015-player .title').text(track.title);
+                    },
+                    onresume: function() {
+                      $('.03-2015-player').addClass('playing');
+                    },
+
+                    onpause: function() {
+                      $('.03-2015-player').removeClass('playing');
+                    },
+
+                    onfinish: function() {
+                      nextTrack();
+                    }
+                  });
+
+                }
+
+              });
+
+              $('.03-2015-player .tracks li').on('click', function(){
+
+
+                var $track = $(this),
+                    data = $track.data('track'),
+                    playing = $track.is('.active');
+
+                if (playing) {
+
+                  soundManager.pause('track_' + data.id);
+
+                } else {
+
+                  if ($track.siblings('li').hasClass('active')) { soundManager.stopAll(); }
+
+                  soundManager.play('track_' + data.id);
+
+                }
+
+                $track.toggleClass('active').siblings('li').removeClass('active');
+
+              });
+            });
+
+            $('.03-2015-player .play, .03-2015-player .pause').on('click', function(){
+              console.log("PLAY");
+
+              if ( $('.03-2015-player .tracks li').hasClass('active') == true ) {
+                soundManager.togglePause( 'track_' + $('.03-2015-player .tracks li.active').data('track').id );
+
+              } else {
+
+                $('.03-2015-player .tracks li:first').click();
+
+              }
+
+            });
+
+            $('.03-2015-player .next').on('click', function(){
+              nextTrack();
+            });
+
+
+            $('.03-2015-player .prev').on('click', function(){
+              prevTrack();
+            });
+
+
+            var nextTrack = function(){
+
+              soundManager.stopAll();
+
+              if ( $('.03-2015-player .tracks li.active').next().click().length == 0 ) {
+                $('.03-2015-player .tracks li:first').click();
+              }
+
+            }
+
+            var prevTrack = function(){
+
+              soundManager.stopAll();
+
+          if ( $('.03-2015-player .tracks li.active').prev().click().length == 0 ) {
+                $('.03-2015-player .tracks li:last').click();
+              }
+
+            }
+
+          });
+
+        });
+
+      </script>
+
+
+
+  </article>
+
+  <article id="12-2014-article">
+  <h2><a href="/2014/12/01/summer.html">Summer</a><span>  2014</span></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <h3></h3>
+
+  <p><img alt="pic" src="https://i1.sndcdn.com/artworks-000127206571-fldmt9-t500x500.jpg" /></p>
+
+
+  <div class="12-2014-player">
+      <div class="title">Track Title</div>
+      <a class="prev">Previous</a>
+      <a class="play">Play</a>
+      <a class="pause">Pause</a>
+      <a class="next">Next</a>
+      <ol class="tracks"></ol>
+    </div>
+
+  
+      <script>
+        soundManager.url = '/swfs/';
+        soundManager.flashVersion = 9;
+        soundManager.useFlashBlock = false;
+        soundManager.useHighPerformance = true;
+        soundManager.wmode = 'transparent';
+        soundManager.useFastPolling = true;
+
+
+        $(function(){
+
+          soundManager.onready(function() {
+          var consumer_key = "64490173cf79fa8173cf8bf23ff6c8d5", url = "http://soundcloud.com/absenteesmusic/sets/summer-2014";
+
+            $.getJSON('http://api.soundcloud.com/resolve?url=' + url + '&format=json&consumer_key=' + consumer_key, function(playlist){
+
+              $('.12-2014-player .title').text(playlist.tracks[0].title);
+
+              $.each(playlist.tracks, function(index, track) {
+
+                if(track.stream_url){
+                  $('<li>' + track.title + '</li>').data('track', track).appendTo('.12-2014-player .tracks');
+                  url = track.stream_url;
+
+                  (url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
+                  url = url + 'consumer_key=' + consumer_key;
+
+                  soundManager.createSound({
+
+                    id: 'track_' + track.id,
+                    url: url,
+
+                    onplay: function() {
+                      $('.12-2014-player').addClass('playing');
+                      $('.12-2014-player .title').text(track.title);
+                    },
+                    onresume: function() {
+                      $('.12-2014-player').addClass('playing');
+                    },
+
+                    onpause: function() {
+                      $('.12-2014-player').removeClass('playing');
+                    },
+
+                    onfinish: function() {
+                      nextTrack();
+                    }
+                  });
+
+                }
+
+              });
+
+              $('.12-2014-player .tracks li').on('click', function(){
+
+
+                var $track = $(this),
+                    data = $track.data('track'),
+                    playing = $track.is('.active');
+
+                if (playing) {
+
+                  soundManager.pause('track_' + data.id);
+
+                } else {
+
+                  if ($track.siblings('li').hasClass('active')) { soundManager.stopAll(); }
+
+                  soundManager.play('track_' + data.id);
+
+                }
+
+                $track.toggleClass('active').siblings('li').removeClass('active');
+
+              });
+            });
+
+            $('.12-2014-player .play, .12-2014-player .pause').on('click', function(){
+              console.log("PLAY");
+
+              if ( $('.12-2014-player .tracks li').hasClass('active') == true ) {
+                soundManager.togglePause( 'track_' + $('.12-2014-player .tracks li.active').data('track').id );
+
+              } else {
+
+                $('.12-2014-player .tracks li:first').click();
+
+              }
+
+            });
+
+            $('.12-2014-player .next').on('click', function(){
+              nextTrack();
+            });
+
+
+            $('.12-2014-player .prev').on('click', function(){
+              prevTrack();
+            });
+
+
+            var nextTrack = function(){
+
+              soundManager.stopAll();
+
+              if ( $('.12-2014-player .tracks li.active').next().click().length == 0 ) {
+                $('.12-2014-player .tracks li:first').click();
+              }
+
+            }
+
+            var prevTrack = function(){
+
+              soundManager.stopAll();
+
+          if ( $('.12-2014-player .tracks li.active').prev().click().length == 0 ) {
+                $('.12-2014-player .tracks li:last').click();
+              }
+
+            }
+
+          });
+
+        });
+
+      </script>
+
+
+
+  </article>
+
+  <article id="09-2014-article">
+  <h2><a href="/2014/09/01/spring.html">Spring</a><span>  2014</span></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <h3></h3>
+
+  <p><img alt="pic" src="https://i1.sndcdn.com/artworks-000127206694-1nl9oq-t500x500.jpg" /></p>
+
+
+  <div class="09-2014-player">
+      <div class="title">Track Title</div>
+      <a class="prev">Previous</a>
+      <a class="play">Play</a>
+      <a class="pause">Pause</a>
+      <a class="next">Next</a>
+      <ol class="tracks"></ol>
+    </div>
+
+  
+      <script>
+        soundManager.url = '/swfs/';
+        soundManager.flashVersion = 9;
+        soundManager.useFlashBlock = false;
+        soundManager.useHighPerformance = true;
+        soundManager.wmode = 'transparent';
+        soundManager.useFastPolling = true;
+
+
+        $(function(){
+
+          soundManager.onready(function() {
+          var consumer_key = "64490173cf79fa8173cf8bf23ff6c8d5", url = "http://soundcloud.com/absenteesmusic/sets/spring-2014";
+
+            $.getJSON('http://api.soundcloud.com/resolve?url=' + url + '&format=json&consumer_key=' + consumer_key, function(playlist){
+
+              $('.09-2014-player .title').text(playlist.tracks[0].title);
+
+              $.each(playlist.tracks, function(index, track) {
+
+                if(track.stream_url){
+                  $('<li>' + track.title + '</li>').data('track', track).appendTo('.09-2014-player .tracks');
+                  url = track.stream_url;
+
+                  (url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
+                  url = url + 'consumer_key=' + consumer_key;
+
+                  soundManager.createSound({
+
+                    id: 'track_' + track.id,
+                    url: url,
+
+                    onplay: function() {
+                      $('.09-2014-player').addClass('playing');
+                      $('.09-2014-player .title').text(track.title);
+                    },
+                    onresume: function() {
+                      $('.09-2014-player').addClass('playing');
+                    },
+
+                    onpause: function() {
+                      $('.09-2014-player').removeClass('playing');
+                    },
+
+                    onfinish: function() {
+                      nextTrack();
+                    }
+                  });
+
+                }
+
+              });
+
+              $('.09-2014-player .tracks li').on('click', function(){
+
+
+                var $track = $(this),
+                    data = $track.data('track'),
+                    playing = $track.is('.active');
+
+                if (playing) {
+
+                  soundManager.pause('track_' + data.id);
+
+                } else {
+
+                  if ($track.siblings('li').hasClass('active')) { soundManager.stopAll(); }
+
+                  soundManager.play('track_' + data.id);
+
+                }
+
+                $track.toggleClass('active').siblings('li').removeClass('active');
+
+              });
+            });
+
+            $('.09-2014-player .play, .09-2014-player .pause').on('click', function(){
+              console.log("PLAY");
+
+              if ( $('.09-2014-player .tracks li').hasClass('active') == true ) {
+                soundManager.togglePause( 'track_' + $('.09-2014-player .tracks li.active').data('track').id );
+
+              } else {
+
+                $('.09-2014-player .tracks li:first').click();
+
+              }
+
+            });
+
+            $('.09-2014-player .next').on('click', function(){
+              nextTrack();
+            });
+
+
+            $('.09-2014-player .prev').on('click', function(){
+              prevTrack();
+            });
+
+
+            var nextTrack = function(){
+
+              soundManager.stopAll();
+
+              if ( $('.09-2014-player .tracks li.active').next().click().length == 0 ) {
+                $('.09-2014-player .tracks li:first').click();
+              }
+
+            }
+
+            var prevTrack = function(){
+
+              soundManager.stopAll();
+
+          if ( $('.09-2014-player .tracks li.active').prev().click().length == 0 ) {
+                $('.09-2014-player .tracks li:last').click();
+              }
+
+            }
+
+          });
+
+        });
+
+      </script>
+
+
+
+  </article>
+
+  <article id="06-2014-article">
+  <h2><a href="/2014/06/01/winter.html">Winter</a><span>  2014</span></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <h3></h3>
+
+  <p><img alt="pic" src="https://i1.sndcdn.com/artworks-000127206729-2odjhd-t500x500.jpg" /></p>
+
+
+  <div class="06-2014-player">
+      <div class="title">Track Title</div>
+      <a class="prev">Previous</a>
+      <a class="play">Play</a>
+      <a class="pause">Pause</a>
+      <a class="next">Next</a>
+      <ol class="tracks"></ol>
+    </div>
+
+  
+      <script>
+        soundManager.url = '/swfs/';
+        soundManager.flashVersion = 9;
+        soundManager.useFlashBlock = false;
+        soundManager.useHighPerformance = true;
+        soundManager.wmode = 'transparent';
+        soundManager.useFastPolling = true;
+
+
+        $(function(){
+
+          soundManager.onready(function() {
+          var consumer_key = "64490173cf79fa8173cf8bf23ff6c8d5", url = "http://soundcloud.com/absenteesmusic/sets/winter-2014";
+
+            $.getJSON('http://api.soundcloud.com/resolve?url=' + url + '&format=json&consumer_key=' + consumer_key, function(playlist){
+
+              $('.06-2014-player .title').text(playlist.tracks[0].title);
+
+              $.each(playlist.tracks, function(index, track) {
+
+                if(track.stream_url){
+                  $('<li>' + track.title + '</li>').data('track', track).appendTo('.06-2014-player .tracks');
+                  url = track.stream_url;
+
+                  (url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
+                  url = url + 'consumer_key=' + consumer_key;
+
+                  soundManager.createSound({
+
+                    id: 'track_' + track.id,
+                    url: url,
+
+                    onplay: function() {
+                      $('.06-2014-player').addClass('playing');
+                      $('.06-2014-player .title').text(track.title);
+                    },
+                    onresume: function() {
+                      $('.06-2014-player').addClass('playing');
+                    },
+
+                    onpause: function() {
+                      $('.06-2014-player').removeClass('playing');
+                    },
+
+                    onfinish: function() {
+                      nextTrack();
+                    }
+                  });
+
+                }
+
+              });
+
+              $('.06-2014-player .tracks li').on('click', function(){
+
+
+                var $track = $(this),
+                    data = $track.data('track'),
+                    playing = $track.is('.active');
+
+                if (playing) {
+
+                  soundManager.pause('track_' + data.id);
+
+                } else {
+
+                  if ($track.siblings('li').hasClass('active')) { soundManager.stopAll(); }
+
+                  soundManager.play('track_' + data.id);
+
+                }
+
+                $track.toggleClass('active').siblings('li').removeClass('active');
+
+              });
+            });
+
+            $('.06-2014-player .play, .06-2014-player .pause').on('click', function(){
+              console.log("PLAY");
+
+              if ( $('.06-2014-player .tracks li').hasClass('active') == true ) {
+                soundManager.togglePause( 'track_' + $('.06-2014-player .tracks li.active').data('track').id );
+
+              } else {
+
+                $('.06-2014-player .tracks li:first').click();
+
+              }
+
+            });
+
+            $('.06-2014-player .next').on('click', function(){
+              nextTrack();
+            });
+
+
+            $('.06-2014-player .prev').on('click', function(){
+              prevTrack();
+            });
+
+
+            var nextTrack = function(){
+
+              soundManager.stopAll();
+
+              if ( $('.06-2014-player .tracks li.active').next().click().length == 0 ) {
+                $('.06-2014-player .tracks li:first').click();
+              }
+
+            }
+
+            var prevTrack = function(){
+
+              soundManager.stopAll();
+
+          if ( $('.06-2014-player .tracks li.active').prev().click().length == 0 ) {
+                $('.06-2014-player .tracks li:last').click();
+              }
+
+            }
+
+          });
+
+        });
+
+      </script>
+
+
+
+  </article>
+
+  <article id="03-2014-article">
+  <h2><a href="/2014/03/01/autumn.html">Autumn</a><span>  2014</span></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <h3></h3>
+
+  <p><img alt="pic" src="https://i1.sndcdn.com/artworks-000127206798-qpg41l-t500x500.jpg" /></p>
+
+
+  <div class="03-2014-player">
+      <div class="title">Track Title</div>
+      <a class="prev">Previous</a>
+      <a class="play">Play</a>
+      <a class="pause">Pause</a>
+      <a class="next">Next</a>
+      <ol class="tracks"></ol>
+    </div>
+
+  
+      <script>
+        soundManager.url = '/swfs/';
+        soundManager.flashVersion = 9;
+        soundManager.useFlashBlock = false;
+        soundManager.useHighPerformance = true;
+        soundManager.wmode = 'transparent';
+        soundManager.useFastPolling = true;
+
+
+        $(function(){
+
+          soundManager.onready(function() {
+          var consumer_key = "64490173cf79fa8173cf8bf23ff6c8d5", url = "http://soundcloud.com/absenteesmusic/sets/autumn-2014";
+
+            $.getJSON('http://api.soundcloud.com/resolve?url=' + url + '&format=json&consumer_key=' + consumer_key, function(playlist){
+
+              $('.03-2014-player .title').text(playlist.tracks[0].title);
+
+              $.each(playlist.tracks, function(index, track) {
+
+                if(track.stream_url){
+                  $('<li>' + track.title + '</li>').data('track', track).appendTo('.03-2014-player .tracks');
+                  url = track.stream_url;
+
+                  (url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
+                  url = url + 'consumer_key=' + consumer_key;
+
+                  soundManager.createSound({
+
+                    id: 'track_' + track.id,
+                    url: url,
+
+                    onplay: function() {
+                      $('.03-2014-player').addClass('playing');
+                      $('.03-2014-player .title').text(track.title);
+                    },
+                    onresume: function() {
+                      $('.03-2014-player').addClass('playing');
+                    },
+
+                    onpause: function() {
+                      $('.03-2014-player').removeClass('playing');
+                    },
+
+                    onfinish: function() {
+                      nextTrack();
+                    }
+                  });
+
+                }
+
+              });
+
+              $('.03-2014-player .tracks li').on('click', function(){
+
+
+                var $track = $(this),
+                    data = $track.data('track'),
+                    playing = $track.is('.active');
+
+                if (playing) {
+
+                  soundManager.pause('track_' + data.id);
+
+                } else {
+
+                  if ($track.siblings('li').hasClass('active')) { soundManager.stopAll(); }
+
+                  soundManager.play('track_' + data.id);
+
+                }
+
+                $track.toggleClass('active').siblings('li').removeClass('active');
+
+              });
+            });
+
+            $('.03-2014-player .play, .03-2014-player .pause').on('click', function(){
+              console.log("PLAY");
+
+              if ( $('.03-2014-player .tracks li').hasClass('active') == true ) {
+                soundManager.togglePause( 'track_' + $('.03-2014-player .tracks li.active').data('track').id );
+
+              } else {
+
+                $('.03-2014-player .tracks li:first').click();
+
+              }
+
+            });
+
+            $('.03-2014-player .next').on('click', function(){
+              nextTrack();
+            });
+
+
+            $('.03-2014-player .prev').on('click', function(){
+              prevTrack();
+            });
+
+
+            var nextTrack = function(){
+
+              soundManager.stopAll();
+
+              if ( $('.03-2014-player .tracks li.active').next().click().length == 0 ) {
+                $('.03-2014-player .tracks li:first').click();
+              }
+
+            }
+
+            var prevTrack = function(){
+
+              soundManager.stopAll();
+
+          if ( $('.03-2014-player .tracks li.active').prev().click().length == 0 ) {
+                $('.03-2014-player .tracks li:last').click();
+              }
+
+            }
+
+          });
+
+        });
+
+      </script>
+
+
+
+  </article>
+
+  <article id="12-2013-article">
+  <h2><a href="/2013/12/01/summer.html">Summer</a><span>  2013</span></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <h3></h3>
+
+  <p><img alt="pic" src="https://i1.sndcdn.com/artworks-000127206878-ghdul3-t500x500.jpg" /></p>
+
+
+  <div class="12-2013-player">
+      <div class="title">Track Title</div>
+      <a class="prev">Previous</a>
+      <a class="play">Play</a>
+      <a class="pause">Pause</a>
+      <a class="next">Next</a>
+      <ol class="tracks"></ol>
+    </div>
+
+  
+      <script>
+        soundManager.url = '/swfs/';
+        soundManager.flashVersion = 9;
+        soundManager.useFlashBlock = false;
+        soundManager.useHighPerformance = true;
+        soundManager.wmode = 'transparent';
+        soundManager.useFastPolling = true;
+
+
+        $(function(){
+
+          soundManager.onready(function() {
+          var consumer_key = "64490173cf79fa8173cf8bf23ff6c8d5", url = "http://soundcloud.com/absenteesmusic/sets/summer-2013-2014";
+
+            $.getJSON('http://api.soundcloud.com/resolve?url=' + url + '&format=json&consumer_key=' + consumer_key, function(playlist){
+
+              $('.12-2013-player .title').text(playlist.tracks[0].title);
+
+              $.each(playlist.tracks, function(index, track) {
+
+                if(track.stream_url){
+                  $('<li>' + track.title + '</li>').data('track', track).appendTo('.12-2013-player .tracks');
+                  url = track.stream_url;
+
+                  (url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
+                  url = url + 'consumer_key=' + consumer_key;
+
+                  soundManager.createSound({
+
+                    id: 'track_' + track.id,
+                    url: url,
+
+                    onplay: function() {
+                      $('.12-2013-player').addClass('playing');
+                      $('.12-2013-player .title').text(track.title);
+                    },
+                    onresume: function() {
+                      $('.12-2013-player').addClass('playing');
+                    },
+
+                    onpause: function() {
+                      $('.12-2013-player').removeClass('playing');
+                    },
+
+                    onfinish: function() {
+                      nextTrack();
+                    }
+                  });
+
+                }
+
+              });
+
+              $('.12-2013-player .tracks li').on('click', function(){
+
+
+                var $track = $(this),
+                    data = $track.data('track'),
+                    playing = $track.is('.active');
+
+                if (playing) {
+
+                  soundManager.pause('track_' + data.id);
+
+                } else {
+
+                  if ($track.siblings('li').hasClass('active')) { soundManager.stopAll(); }
+
+                  soundManager.play('track_' + data.id);
+
+                }
+
+                $track.toggleClass('active').siblings('li').removeClass('active');
+
+              });
+            });
+
+            $('.12-2013-player .play, .12-2013-player .pause').on('click', function(){
+              console.log("PLAY");
+
+              if ( $('.12-2013-player .tracks li').hasClass('active') == true ) {
+                soundManager.togglePause( 'track_' + $('.12-2013-player .tracks li.active').data('track').id );
+
+              } else {
+
+                $('.12-2013-player .tracks li:first').click();
+
+              }
+
+            });
+
+            $('.12-2013-player .next').on('click', function(){
+              nextTrack();
+            });
+
+
+            $('.12-2013-player .prev').on('click', function(){
+              prevTrack();
+            });
+
+
+            var nextTrack = function(){
+
+              soundManager.stopAll();
+
+              if ( $('.12-2013-player .tracks li.active').next().click().length == 0 ) {
+                $('.12-2013-player .tracks li:first').click();
+              }
+
+            }
+
+            var prevTrack = function(){
+
+              soundManager.stopAll();
+
+          if ( $('.12-2013-player .tracks li.active').prev().click().length == 0 ) {
+                $('.12-2013-player .tracks li:last').click();
+              }
+
+            }
+
+          });
+
+        });
+
+      </script>
+
+
+
+  </article>
+
+  <article id="09-2013-article">
+  <h2><a href="/2013/09/01/spring.html">Spring</a><span>  2013</span></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <h3></h3>
+
+  <p><img alt="pic" src="https://i1.sndcdn.com/artworks-000127206961-ydowmd-t500x500.jpg" /></p>
+
+
+  <div class="09-2013-player">
+      <div class="title">Track Title</div>
+      <a class="prev">Previous</a>
+      <a class="play">Play</a>
+      <a class="pause">Pause</a>
+      <a class="next">Next</a>
+      <ol class="tracks"></ol>
+    </div>
+
+  
+      <script>
+        soundManager.url = '/swfs/';
+        soundManager.flashVersion = 9;
+        soundManager.useFlashBlock = false;
+        soundManager.useHighPerformance = true;
+        soundManager.wmode = 'transparent';
+        soundManager.useFastPolling = true;
+
+
+        $(function(){
+
+          soundManager.onready(function() {
+          var consumer_key = "64490173cf79fa8173cf8bf23ff6c8d5", url = "http://soundcloud.com/absenteesmusic/sets/spring-2013";
+
+            $.getJSON('http://api.soundcloud.com/resolve?url=' + url + '&format=json&consumer_key=' + consumer_key, function(playlist){
+
+              $('.09-2013-player .title').text(playlist.tracks[0].title);
+
+              $.each(playlist.tracks, function(index, track) {
+
+                if(track.stream_url){
+                  $('<li>' + track.title + '</li>').data('track', track).appendTo('.09-2013-player .tracks');
+                  url = track.stream_url;
+
+                  (url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
+                  url = url + 'consumer_key=' + consumer_key;
+
+                  soundManager.createSound({
+
+                    id: 'track_' + track.id,
+                    url: url,
+
+                    onplay: function() {
+                      $('.09-2013-player').addClass('playing');
+                      $('.09-2013-player .title').text(track.title);
+                    },
+                    onresume: function() {
+                      $('.09-2013-player').addClass('playing');
+                    },
+
+                    onpause: function() {
+                      $('.09-2013-player').removeClass('playing');
+                    },
+
+                    onfinish: function() {
+                      nextTrack();
+                    }
+                  });
+
+                }
+
+              });
+
+              $('.09-2013-player .tracks li').on('click', function(){
+
+
+                var $track = $(this),
+                    data = $track.data('track'),
+                    playing = $track.is('.active');
+
+                if (playing) {
+
+                  soundManager.pause('track_' + data.id);
+
+                } else {
+
+                  if ($track.siblings('li').hasClass('active')) { soundManager.stopAll(); }
+
+                  soundManager.play('track_' + data.id);
+
+                }
+
+                $track.toggleClass('active').siblings('li').removeClass('active');
+
+              });
+            });
+
+            $('.09-2013-player .play, .09-2013-player .pause').on('click', function(){
+              console.log("PLAY");
+
+              if ( $('.09-2013-player .tracks li').hasClass('active') == true ) {
+                soundManager.togglePause( 'track_' + $('.09-2013-player .tracks li.active').data('track').id );
+
+              } else {
+
+                $('.09-2013-player .tracks li:first').click();
+
+              }
+
+            });
+
+            $('.09-2013-player .next').on('click', function(){
+              nextTrack();
+            });
+
+
+            $('.09-2013-player .prev').on('click', function(){
+              prevTrack();
+            });
+
+
+            var nextTrack = function(){
+
+              soundManager.stopAll();
+
+              if ( $('.09-2013-player .tracks li.active').next().click().length == 0 ) {
+                $('.09-2013-player .tracks li:first').click();
+              }
+
+            }
+
+            var prevTrack = function(){
+
+              soundManager.stopAll();
+
+          if ( $('.09-2013-player .tracks li.active').prev().click().length == 0 ) {
+                $('.09-2013-player .tracks li:last').click();
+              }
+
+            }
+
+          });
+
+        });
+
+      </script>
+
+
+
+  </article>
+
+  <article id="06-2013-article">
+  <h2><a href="/2013/06/01/winter.html">Winter</a><span>  2013</span></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <h3></h3>
+
+  <p><img alt="pic" src="https://i1.sndcdn.com/artworks-000127207014-9zez7t-t500x500.jpg" /></p>
+
+
+  <div class="06-2013-player">
+      <div class="title">Track Title</div>
+      <a class="prev">Previous</a>
+      <a class="play">Play</a>
+      <a class="pause">Pause</a>
+      <a class="next">Next</a>
+      <ol class="tracks"></ol>
+    </div>
+
+  
+      <script>
+        soundManager.url = '/swfs/';
+        soundManager.flashVersion = 9;
+        soundManager.useFlashBlock = false;
+        soundManager.useHighPerformance = true;
+        soundManager.wmode = 'transparent';
+        soundManager.useFastPolling = true;
+
+
+        $(function(){
+
+          soundManager.onready(function() {
+          var consumer_key = "64490173cf79fa8173cf8bf23ff6c8d5", url = "http://soundcloud.com/absenteesmusic/sets/winter-2013";
+
+            $.getJSON('http://api.soundcloud.com/resolve?url=' + url + '&format=json&consumer_key=' + consumer_key, function(playlist){
+
+              $('.06-2013-player .title').text(playlist.tracks[0].title);
+
+              $.each(playlist.tracks, function(index, track) {
+
+                if(track.stream_url){
+                  $('<li>' + track.title + '</li>').data('track', track).appendTo('.06-2013-player .tracks');
+                  url = track.stream_url;
+
+                  (url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
+                  url = url + 'consumer_key=' + consumer_key;
+
+                  soundManager.createSound({
+
+                    id: 'track_' + track.id,
+                    url: url,
+
+                    onplay: function() {
+                      $('.06-2013-player').addClass('playing');
+                      $('.06-2013-player .title').text(track.title);
+                    },
+                    onresume: function() {
+                      $('.06-2013-player').addClass('playing');
+                    },
+
+                    onpause: function() {
+                      $('.06-2013-player').removeClass('playing');
+                    },
+
+                    onfinish: function() {
+                      nextTrack();
+                    }
+                  });
+
+                }
+
+              });
+
+              $('.06-2013-player .tracks li').on('click', function(){
+
+
+                var $track = $(this),
+                    data = $track.data('track'),
+                    playing = $track.is('.active');
+
+                if (playing) {
+
+                  soundManager.pause('track_' + data.id);
+
+                } else {
+
+                  if ($track.siblings('li').hasClass('active')) { soundManager.stopAll(); }
+
+                  soundManager.play('track_' + data.id);
+
+                }
+
+                $track.toggleClass('active').siblings('li').removeClass('active');
+
+              });
+            });
+
+            $('.06-2013-player .play, .06-2013-player .pause').on('click', function(){
+              console.log("PLAY");
+
+              if ( $('.06-2013-player .tracks li').hasClass('active') == true ) {
+                soundManager.togglePause( 'track_' + $('.06-2013-player .tracks li.active').data('track').id );
+
+              } else {
+
+                $('.06-2013-player .tracks li:first').click();
+
+              }
+
+            });
+
+            $('.06-2013-player .next').on('click', function(){
+              nextTrack();
+            });
+
+
+            $('.06-2013-player .prev').on('click', function(){
+              prevTrack();
+            });
+
+
+            var nextTrack = function(){
+
+              soundManager.stopAll();
+
+              if ( $('.06-2013-player .tracks li.active').next().click().length == 0 ) {
+                $('.06-2013-player .tracks li:first').click();
+              }
+
+            }
+
+            var prevTrack = function(){
+
+              soundManager.stopAll();
+
+          if ( $('.06-2013-player .tracks li.active').prev().click().length == 0 ) {
+                $('.06-2013-player .tracks li:last').click();
+              }
+
+            }
+
+          });
+
+        });
+
+      </script>
+
+
+
+  </article>
+
+  <article id="03-2013-article">
+  <h2><a href="/2013/03/01/autumn.html">Autumn</a><span>  2013</span></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <h3></h3>
+
+  <p><img alt="pic" src="https://i1.sndcdn.com/artworks-000127207092-zzpmqn-t500x500.jpg" /></p>
+
+
+  <div class="03-2013-player">
+      <div class="title">Track Title</div>
+      <a class="prev">Previous</a>
+      <a class="play">Play</a>
+      <a class="pause">Pause</a>
+      <a class="next">Next</a>
+      <ol class="tracks"></ol>
+    </div>
+
+  
+      <script>
+        soundManager.url = '/swfs/';
+        soundManager.flashVersion = 9;
+        soundManager.useFlashBlock = false;
+        soundManager.useHighPerformance = true;
+        soundManager.wmode = 'transparent';
+        soundManager.useFastPolling = true;
+
+
+        $(function(){
+
+          soundManager.onready(function() {
+          var consumer_key = "64490173cf79fa8173cf8bf23ff6c8d5", url = "http://soundcloud.com/absenteesmusic/sets/autumn-2013";
+
+            $.getJSON('http://api.soundcloud.com/resolve?url=' + url + '&format=json&consumer_key=' + consumer_key, function(playlist){
+
+              $('.03-2013-player .title').text(playlist.tracks[0].title);
+
+              $.each(playlist.tracks, function(index, track) {
+
+                if(track.stream_url){
+                  $('<li>' + track.title + '</li>').data('track', track).appendTo('.03-2013-player .tracks');
+                  url = track.stream_url;
+
+                  (url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
+                  url = url + 'consumer_key=' + consumer_key;
+
+                  soundManager.createSound({
+
+                    id: 'track_' + track.id,
+                    url: url,
+
+                    onplay: function() {
+                      $('.03-2013-player').addClass('playing');
+                      $('.03-2013-player .title').text(track.title);
+                    },
+                    onresume: function() {
+                      $('.03-2013-player').addClass('playing');
+                    },
+
+                    onpause: function() {
+                      $('.03-2013-player').removeClass('playing');
+                    },
+
+                    onfinish: function() {
+                      nextTrack();
+                    }
+                  });
+
+                }
+
+              });
+
+              $('.03-2013-player .tracks li').on('click', function(){
+
+
+                var $track = $(this),
+                    data = $track.data('track'),
+                    playing = $track.is('.active');
+
+                if (playing) {
+
+                  soundManager.pause('track_' + data.id);
+
+                } else {
+
+                  if ($track.siblings('li').hasClass('active')) { soundManager.stopAll(); }
+
+                  soundManager.play('track_' + data.id);
+
+                }
+
+                $track.toggleClass('active').siblings('li').removeClass('active');
+
+              });
+            });
+
+            $('.03-2013-player .play, .03-2013-player .pause').on('click', function(){
+              console.log("PLAY");
+
+              if ( $('.03-2013-player .tracks li').hasClass('active') == true ) {
+                soundManager.togglePause( 'track_' + $('.03-2013-player .tracks li.active').data('track').id );
+
+              } else {
+
+                $('.03-2013-player .tracks li:first').click();
+
+              }
+
+            });
+
+            $('.03-2013-player .next').on('click', function(){
+              nextTrack();
+            });
+
+
+            $('.03-2013-player .prev').on('click', function(){
+              prevTrack();
+            });
+
+
+            var nextTrack = function(){
+
+              soundManager.stopAll();
+
+              if ( $('.03-2013-player .tracks li.active').next().click().length == 0 ) {
+                $('.03-2013-player .tracks li:first').click();
+              }
+
+            }
+
+            var prevTrack = function(){
+
+              soundManager.stopAll();
+
+          if ( $('.03-2013-player .tracks li.active').prev().click().length == 0 ) {
+                $('.03-2013-player .tracks li:last').click();
+              }
+
+            }
+
+          });
+
+        });
+
+      </script>
+
+
+
+  </article>
+
+
+
+    </div>
+
+
+
+  </body>
+</html>
